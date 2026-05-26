@@ -1175,7 +1175,7 @@ elif "공정 변수" in page:
 st.markdown(f"""
 <div style="text-align:center; padding: 24px 0 8px; border-top: 1px solid {C['border']}; margin-top: 24px;">
     <div style="font-size:11px; color:{C['text_dim']};">
-        ⚗️ TEP 공정 이상탐지 시스템 · IF + XGBoost + SHAP · 공정 DX 포트폴리오
+        ⚗️ TEP 공정 이상탐지 시스템 · IF + XGBoost + SHAP
     </div>
 </div>
 """, unsafe_allow_html=True)
