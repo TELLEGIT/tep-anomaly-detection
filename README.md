@@ -1,5 +1,5 @@
 # tep-anomaly-detection
-### 화학공정 센서 데이터 기반 AI 이상탐지 및 실시간 공정 모니터링 시스템
+### 공정 센서 데이터 기반 실시간 AI 이상탐지 및 Explainable Process Monitoring System
 
 ---
 
@@ -9,14 +9,13 @@
 화학공정 제어 벤치마크 시뮬레이터입니다.
 반응기 → 냉각기 → 기액분리기 → 재순환 → 분리탑으로 이어지는
 실제 화학공장 구조를 그대로 재현하며,
-52개 센서(XMEAS) + 11개 조작 변수(XMV) = 총 52개 변수로 구성됩니다.
+41개 센서 변수(XMEAS) + 11개 조작 변수(XMV) = 총 52개 변수
 
-이 프로젝트는 TEP 데이터를 활용해:
-- 비지도·지도 학습 기반 **공정 이상탐지 모델** 개발
-- **SHAP XAI** 로 이상 발생 원인 변수를 화공 원리와 연결해 해석
-- **Streamlit 실시간 모니터링 대시보드** 구현
-
-을 목표로 합니다.
+이 프로젝트는 TEP 공정 데이터를 기반으로
+실시간 이상 상태를 탐지하고,
+이상 판단의 원인을 설명 가능한 형태(XAI)로 해석하며,
+이를 시각적으로 모니터링할 수 있는
+공정 DX 시스템 구축을 목표로 한다.
 
 ---
 
@@ -67,58 +66,55 @@
 ```
 tep-anomaly-detection/
 ├── data/
-│   ├── raw/                  # 원본 CSV (Git 미포함)
-│   └── processed/            # 전처리 후 npy 저장
+│   ├── raw/                   # 원본 CSV
+│   ├── processed/             # 전처리 npy
+│   ├── metrics.json
+│   ├── result_df.parquet
+│   ├── top_features.json
+│   └── shap_values.npy
+│
+├── models/
+│   ├── isolation_forest.pkl
+│   ├── xgboost.pkl
+│   └── scaler.pkl
 │
 ├── notebooks/
-│   ├── 01_eda.ipynb           # 탐색적 데이터 분석
-│   ├── 02_preprocessing.ipynb # 전처리 실험
-│   ├── 03_baseline.ipynb      # Isolation Forest + XGBoost
-│   ├── 04_autoencoder.ipynb   # Autoencoder 이상탐지
-│   ├── 05_lstm.ipynb          # LSTM 시계열 분류
-│   └── 06_xai_shap.ipynb      # SHAP 해석
+│   ├── 01_eda.ipynb
+│   ├── 02_preprocessing.ipynb
+│   ├── 03_isolation_forest.ipynb
+│   ├── 04_xgboost_baseline.ipynb
+│   └── 05_shap_interpretability.ipynb
 │
-├── src/
-│   ├── data_loader.py         # 데이터 로딩·분리·라벨 생성
-│   ├── preprocessor.py        # 정규화·윈도우 생성
-│   ├── evaluator.py           # 성능 평가 공통 함수
-│   ├── xai.py                 # SHAP 분석
-│   └── models/
-│       ├── isolation_forest.py
-│       ├── autoencoder.py
-│       └── lstm_classifier.py
-│
-├── models/                    # 학습된 모델 저장 (.pkl, .pt)
-├── outputs/                   # 그래프·리포트 PNG
-├── app/
-│   └── streamlit_app.py       # 실시간 모니터링 대시보드
+├── app.py                     # Streamlit 대시보드
+├── generate_demo_data.py
 ├── requirements.txt
 └── README.md
+
 ```
 
 ---
 
 ## 모델 비교 전략
 
-| 모델 | 학습 방식 | 시계열 반영 | 포트폴리오 역할 |
-|------|-----------|------------|----------------|
-| Isolation Forest | 비지도 | X | 빠른 베이스라인 |
-| XGBoost | 지도 | X | 성능 기준선 + SHAP |
-| Autoencoder | 비지도 | △ | **메인 모델** (현장 현실적) |
-| LSTM | 지도 | O | 시계열 강점 실험 |
+| 모델 | 특징 | 활용 목적 |
+|------|------|------|
+| Isolation Forest | 비지도 이상탐지 | 초기 기준선 성능 확보 |
+| XGBoost | 지도학습 기반 분류 | SHAP 기반 해석 가능 |
+| Autoencoder | 정상 패턴 재구성 기반 탐지 | 비지도 이상탐지 성능 비교 |
+| LSTM | 시계열 의존성 학습 | 시간 흐름 기반 이상 탐지 |
 
 ---
 
-## 핵심 성과 (목표)
+## 핵심 구현 내용
 
-| 모델 | F1-Score | ROC-AUC | 탐지 지연(타임스텝) |
-|------|----------|---------|-----------------|
-| Isolation Forest | - | - | - |
-| XGBoost | - | - | - |
-| Autoencoder | - | - | - |
-| LSTM | - | - | - |
-
-*실험 완료 후 채워넣기*
+- TEP 공정 데이터 기반 이상탐지 파이프라인 구축
+- Isolation Forest 및 XGBoost 기반 이상탐지 모델 구현
+- SHAP 기반 공정 변수 중요도 해석
+- Streamlit 기반 실시간 공정 모니터링 대시보드 구현
+- Fault 유형별 탐지 성능 및 탐지 지연 시각화
+- 공정 변수 상관관계 및 이상 분포 EDA 제공
+- Fault 발생 이후 탐지 지연(Detection Delay) 분석
+- Explainable AI 기반 공정 변수 영향도 시각화
 
 ---
 
@@ -136,7 +132,8 @@ pip install -r requirements.txt
 jupyter notebook notebooks/
 
 # 4. 대시보드 실행
-streamlit run app/streamlit_app.py
+streamlit run app.py
+
 ```
 
 ---
