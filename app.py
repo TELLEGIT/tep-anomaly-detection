@@ -646,7 +646,6 @@ if "대시보드" in page:
 
         fig4.update_layout(**plot_layout(
             height=240,
-            text=[f"{v} samples" for v in delay_v],
             yaxis=dict(title="탐지 지연 샘플 수"),
             title=dict(text="이상 발생 → 첫 탐지 지연", font=dict(size=12), x=0),
         ))
