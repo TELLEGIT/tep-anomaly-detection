@@ -1,3 +1,7 @@
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![XGBoost](https://img.shields.io/badge/XGBoost-AnomalyDetection-purple)
+
 # tep-anomaly-detection
 ### 공정 센서 데이터 기반 실시간 AI 이상탐지 및 Explainable Process Monitoring System
 
@@ -9,13 +13,14 @@
 화학공정 제어 벤치마크 시뮬레이터입니다.
 반응기 → 냉각기 → 기액분리기 → 재순환 → 분리탑으로 이어지는
 실제 화학공장 구조를 그대로 재현하며,
-41개 센서 변수(XMEAS) + 11개 조작 변수(XMV) = 총 52개 변수
+41개 공정 측정 변수(XMEAS)와 11개 조작 변수(XMV)로 구성된
+총 52개 변수 시스템이다.
 
 이 프로젝트는 TEP 공정 데이터를 기반으로
 실시간 이상 상태를 탐지하고,
 이상 판단의 원인을 설명 가능한 형태(XAI)로 해석하며,
 이를 시각적으로 모니터링할 수 있는
-공정 DX 시스템 구축을 목표로 한다.
+공정 데이터를 활용한 AI 기반 공정 모니터링 및 이상탐지 시스템 구현 프로젝트이다.
 
 ---
 
@@ -66,8 +71,8 @@
 ```
 tep-anomaly-detection/
 ├── data/
-│   ├── raw/                   # 원본 CSV
-│   ├── processed/             # 전처리 npy
+│   ├── raw/                   # 원본 CSV (용량 문제로 Git 제외)
+│   ├── processed/             # 전처리 데이터 저장
 │   ├── metrics.json
 │   ├── result_df.parquet
 │   ├── top_features.json
