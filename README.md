@@ -2,6 +2,8 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
 ![XGBoost](https://img.shields.io/badge/XGBoost-AnomalyDetection-purple)
 
+<img width="1686" height="854" alt="스크린샷 2026-05-26 13 27 18" src="https://github.com/user-attachments/assets/933de58d-626d-4d50-98c6-57e15c694503" />
+
 # tep-anomaly-detection
 ### 공정 센서 데이터 기반 실시간 AI 이상탐지 및 Explainable Process Monitoring System
 
