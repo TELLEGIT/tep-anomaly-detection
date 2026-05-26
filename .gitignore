@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+
+# 가상환경
+venv/
+.venv/
+env/
+
+# 대용량 원본/전처리 데이터
+data/raw/
+data/processed/
+data/train_df.parquet
+data/test_df_full.parquet
+data/col_info.json
+
+# 모델 파일
+models/
+
+# Jupyter 체크포인트
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Mac
+.DS_Store
+
+# 출력물
+outputs/
